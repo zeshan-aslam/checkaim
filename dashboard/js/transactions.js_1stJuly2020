@@ -1,0 +1,134 @@
+var Transactions = window.Transactions || {};
+Transactions.PageNo = 1;
+
+Transactions.Common = function () {
+    return {
+        Init: function () {
+
+        	$("#btnSearchTransaction").bind("click", function(){
+
+        		Transactions.Action.Search();
+
+        	});
+	
+			Transactions.Action.Search();
+		
+			$("#divPagination").on("click", ".pageno", function(){
+
+				Transactions.PageNo = $(this).data("pageno");
+				Transactions.Action.Search();
+
+			});
+
+			$("#divPagination").on("click", ".next", function(){
+
+				Transactions.PageNo = Transactions.PageNo + 1;
+				Transactions.Action.Search();
+
+			});
+
+			$("#divPagination").on("click", ".previous", function(){
+
+				Transactions.PageNo = Transactions.PageNo - 1;
+				Transactions.Action.Search();
+
+			});
+
+			
+
+        }
+    }
+}();
+
+Transactions.Action = function () {
+    return {
+
+        Search: function(success)
+        {
+		
+				if(typeof(success) == "undefined")
+				{
+				 success = function (response, status) {
+		                        
+								console.log(response);
+								
+								if(response != null)
+								{
+									
+										var html = "";
+										var source = $("#transactions-template").html();
+										var template = Handlebars.compile(source);
+										html = template(response.data);	
+										
+										$("#divTransactions").html(html);
+
+										source = $("#pager-template").html();
+										template = Handlebars.compile(source);
+										html = template(response);	
+										$("#divPagination").html(html);
+
+										var pager = response.pager;
+
+										if(Transactions.PageNo == 1)
+										{
+											$("#divPagination .previous").hide();
+										}
+										else
+										{
+											$("#divPagination .previous").show();
+										}
+
+										if(pager.totalpages == Transactions.PageNo)
+										{
+											$("#divPagination .next").hide();
+										}
+										else
+										{
+											$("#divPagination .next").show();
+										}
+									
+										
+								}	
+								
+		                   };
+				}
+
+			var orderId = $("#txtOrderId").val();
+
+			var postData = {'transactions_list':"yes", orderid: orderId, pageno: Transactions.PageNo};
+			var headerData =  {};
+			var url = "/controller/transactions.php";
+
+			Transactions.Ajax.Request('POST', postData, url, success);
+		
+		}
+    }
+}();
+
+
+
+Transactions.Ajax = function () {
+    return {
+        Request: function (requestType, postData, actionUrl, successCallback, errorCallback, completeCallback) {
+            if (errorCallback == undefined) {
+                errorCallback = function (jqXHR, textStatus, errorThrown) {
+                    console.log('ERROR: ' + jqXHR.status);
+                };
+            }
+            if (completeCallback == undefined) {
+                completeCallback = function (jqXHR, textStatus) {
+                }
+            }
+            $.ajax({
+                type: requestType,
+                data: postData,
+                url: actionUrl,
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",
+                success: eval(successCallback),
+                error: eval(errorCallback),
+                complete: eval(completeCallback)
+            });
+        }
+    };
+}();

@@ -1,0 +1,58 @@
+<?php
+require_once('../../config.php');
+
+$loggedinuser = user();
+
+
+if(isset($_REQUEST['clientstats']))
+{
+	global $con;
+
+	$status = false;
+	$data = array();
+	
+	if($loggedinuser != '')
+	{
+
+		$from = isset($_POST["from"]) ? $_POST["from"] : date('Y-m-d', strtotime('-60 days'));
+		$to = isset($_POST["to"]) ? $_POST["to"] : date('Y-m-d', strtotime('+1 day'));
+		
+		$statsSql = " SELECT mid, um.user_meta, round(sum(amount),2) amount, count(*) as transactions FROM `partners_aianalytics` ai ";
+		$statsSql.= " left join av_usermeta um on ai.mid = um.user_id and um.user_key = 'av_company' where mid <> 0 ";
+
+		
+
+		if($from != "" && $to != "")
+		{
+			$statsSql.= " and ai.createdate between '$from' and '$to' ";
+		}
+
+		$statsSql.= " group by mid order by amount desc  "; 
+
+		$statsSqlResult =	mysqli_query($con, $statsSql);	
+
+		while($resultItem = mysqli_fetch_assoc($statsSqlResult))
+		{
+			$data[] = $resultItem;
+		}
+
+
+		$response["status"] = $status;
+		$response["data"] = $data;
+
+		
+	}
+	else
+	{
+		$response["status"] = false;
+		$response["message"] = "Unauthorized Access";
+	}
+
+	echo json_encode($response);
+
+	die();
+		
+}
+
+
+?>

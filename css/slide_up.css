@@ -1,0 +1,206 @@
+
+#ulp-dST25dQgDqXbdYlY-overlay {background: rgba(51,51,51,0.8);}
+
+.ulp-overlay {
+    position: fixed !important;
+    z-index: 999999;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    display: none;
+    background-position: center center;
+    animation-duration: 1000ms !important;
+    -webkit-animation-duration: 1000ms !important;
+    -ms-animation-duration: 1000ms !important;
+    -moz-animation-duration: 1000ms !important;
+    animation-delay: 0ms !important;
+    -webkit-animation-delay: 0ms !important;
+    -ms-animation-delay: 0ms !important;
+    -moz-animation-delay: 0ms !important;
+}
+#ulp-dST25dQgDqXbdYlY, #ulp-dST25dQgDqXbdYlY .ulp-content {
+    width: 720px;
+    height: 500px;
+}
+.ulp-window-middle-center {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+.ulp-window {
+    position: fixed !important;
+    z-index: 1000001;
+    text-align: left;
+    display: none;
+}
+#ulp-dST25dQgDqXbdYlY, #ulp-dST25dQgDqXbdYlY .ulp-content {
+    width: 720px;
+    height: 500px;
+}
+.ulp-content {
+    position: relative;
+}
+
+#ulp-layer-555 {
+    box-shadow: 0px 5px 20px 0px #202020;
+    background-color: #e6d8d8;
+    background-color: rgba(230,216,216,1);
+   
+    background-repeat: no-repeat;
+    background-size: auto;
+    border-radius: 0px;
+    z-index: 1000003;
+    text-align: left;
+    padding: 0px 0px;
+}
+
+#ulp-layer-555 {
+    width: 720px;
+    height: 420px;
+}
+
+.poprigth {
+    box-shadow: 0px 5px 20px 0px #202020;
+    background-color: #f3f3f3;
+    background-color: rgba(243,243,243,1);
+    border-radius: 0px;
+    z-index: 1000004;
+    text-align: left;
+    padding: 0px 0px;
+}
+
+.poprigth {
+    width: 500px;
+    height: 557px;
+}
+
+
+.ulp-layer {
+    position: absolute;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    text-align: justify;
+    line-height: 1.475;
+    letter-spacing: 0;
+    background-position: center center;
+}
+#ulp-layer-557 {
+    border-radius: 0px;
+    z-index: 1000005;
+    text-align: center;
+    padding: 3px 0px;
+}
+
+#ulp-layer-557, #ulp-layer-557 * {
+       text-align:center;
+    font-family: 'Open Sans',arial;
+    font-weight: 700;
+    color: #ea5455;
+    font-size: 52px;
+    line-height: 41px;
+    padding-top: 12px;
+}
+#ulp-layer-560 {
+    border-radius: 0px;
+    z-index: 1000008;
+    text-align: left;
+    padding: 0px 0px;
+}
+#ulp-layer-560, #ulp-layer-560 * {
+    text-align: left;
+    font-family: 'arial',arial;
+    font-weight: 400;
+    color: #223147;
+    font-size: 15px;
+	padding-left:5px;
+	padding-top:8px;
+}
+
+#ulp-layer-560 {
+    width: 95%;
+    height: 45px;
+}
+
+#ulp-layer-558 {
+    border-radius: 0px;
+    z-index: 1000006;
+    text-align: left;
+    padding: 0px 0px;
+}
+
+#ulp-layer-558, #ulp-layer-558 * {
+    text-align: left;
+    font-family: 'Open Sans',arial;
+    font-weight: 700;
+    color: #ea5455;
+    font-size: 40px;
+}
+#ulp-layer-559 {
+    border-radius: 0px;
+    z-index: 1000007;
+    text-align: center;
+    padding: 0px 0px;
+}
+
+#ulp-layer-559, #ulp-layer-559 * {
+    text-align: center;
+    font-family: 'arial',arial;
+    font-weight: 400;
+    color: #223147;
+    font-size: 72px;
+}
+#ulp-layer-560, #ulp-layer-560 * {
+    text-align:center;
+    font-family: 'arial',arial;
+    font-weight: 400;
+    color: #223147;
+    font-size: 14px;
+	padding-top:8px;
+}
+#ulp-layer-560 {
+    width: 95%;
+    height: 45px;
+}
+#ulp-layer-561 {
+	border-radius: 0px;
+z-index: 1000009;
+text-align: left;
+padding: 2px 4px;}
+
+#ulp-layer-561, #ulp-layer-561 * {
+    text-align: left;
+    font-family: 'arial',arial;
+    font-weight: 400;
+    color: #b1b1b1;
+    font-size: 13px;
+}
+#ulp-layer-562, #ulp-layer-562 * {
+    text-align: left;
+    font-family: 'arial',arial;
+    font-weight: 400;
+    color: #ea5455;
+    font-size: 14px;
+}
+
+#ulp-layer-562 {
+    width: 250px;
+    height: 40px;
+}
+#button
+{
+	width: 100%;
+height: 45px;
+text-align: center;
+    border: 1px solid #23CCEF;
+    color: #FFFFFF;
+    background-color: #23CCEF;
+    cursor: pointer;
+	border-radius: 15px;
+	margin-top:12px;
+}

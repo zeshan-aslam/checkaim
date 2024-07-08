@@ -1,0 +1,275 @@
+<?php
+//daily stats grabber.
+$todaySaleSql = "select sales, alerts, transactions, reports from partners_aidailystats where mid='$leadgenid' and date = '".date("Y-m-d")."' "; 
+$todaySaleSqlResult 	=	mysqli_query($con,$todaySaleSql);	
+$todaysSale = mysqli_fetch_assoc($todaySaleSqlResult);
+$comaign = unserialize(get_user_info($leadgenid,'av_campaign',true));
+
+/*Monthly Count*/
+$monthSaleSql = "select SUM(alerts) AS value_alerts, SUM(transactions) AS value_trans, sum(reports) AS value_reports from partners_aidailystats where mid='$leadgenid' and date BETWEEN '".date("Y-m")."-01' and '".date("Y-m-t")."' "; 
+$monthSaleSqlResult 	=	mysqli_query($con,$monthSaleSql);	
+$monthsSale = mysqli_fetch_assoc($monthSaleSqlResult);
+
+//year stats grabber
+$yearSaleSql = "select sum(sales) AS value_year_sales, sum(transactions) AS val_year_trans, sum(alerts) AS val_year_alerts from partners_aidailystats where mid='$leadgenid' and year(date) = '".date("Y")."' "; 
+$yearSaleSqlResult 	=	mysqli_query($con,$yearSaleSql);
+$yearSale = mysqli_fetch_assoc($yearSaleSqlResult);
+
+// ASSIGN THE VALUES
+
+/* Daily Records*/
+$nimpress = $todaysSale["transactions"];
+$nsubmission = $todaysSale["alerts"];
+$nconfirlead = $todaysSale["reports"];
+
+$totaltoday = $nimpress + $nsubmission + $nconfirlead;
+$pimpress = $nimpress / $totaltoday * 100;
+$psubmission = $nsubmission / $totaltoday * 100;
+$pconfirlead = $nconfirlead / $totaltoday * 100;
+
+// Monthly Records
+$cmimpress = $monthsSale["value_trans"];
+$cmsubmission = $monthsSale["value_alerts"];
+$cmconfirlead = $monthsSale["value_reports"];
+
+$mimpress = $cmimpress;
+$msubmission = $cmsubmission;
+$mconfirlead = $cmconfirlead;
+
+/*Yearly Records*/
+$cysubmission = $yearSale["val_year_trans"];
+$cyconfirlead = $yearSale["val_year_alerts"];
+$countconfirmleadsyearly_db = $yearSale["val_year_trans"];
+$countsubmissionsyearly = $yearSale["val_year_alerts"];
+
+$submissionyearly = $yearSale["val_year_trans"];
+$leadsyearly =  $yearSale["val_year_alerts"];
+
+?>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-4 col-sm-6">
+			<div class="card card-stats">
+				<div class="card-body ">
+					<div class="row">
+						<div class="col-5">
+							<div class="icon-big text-center icon-warning">
+								<i class="nc-icon nc-money-coins text-warning"></i>
+							</div>
+						</div>
+						<div class="col-7">
+							<div class="numbers">
+								<p class="card-category">Total Sales Monitored</p>
+								<h4 class="card-title"><?=$currSymbol?><?=number_format($yearSale["value_year_sales"],2)?> (<?php echo  $yearSale["val_year_trans"] ;?>)</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer ">
+					<hr>
+					<div class="stats">
+						<i class="fa "></i>This Year = <?php echo date('Y'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-lg-4 col-sm-6">
+			<div class="card card-stats">
+				<div class="card-body ">
+					<div class="row">
+						<div class="col-5">
+							<div class="icon-big text-center icon-warning">
+								<i class="nc-icon nc-bank text-success"></i>
+							</div>
+						</div>
+						<div class="col-7">
+							<div class="numbers">
+								<p class="card-category">Today's Sales</p>
+						
+								<h4 class="card-title"><?=$currSymbol?><?=number_format($todaysSale["sales"],2)?> (<?=$todaysSale["transactions"]?>)</h4>
+							</div>
+						</div> 
+					</div>
+				</div>
+				<div class="card-footer ">
+					<hr>
+					<div class="stats">
+						<i class="fa "></i> <?php echo date('d/m/Y'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+				<div class="col-lg-4 col-sm-6">
+			<div class="card card-stats">
+				<div class="card-body ">
+					<div class="row">
+						<div class="col-5">
+							<div class="icon-big text-center icon-warning">
+								<i class="nc-icon nc-time-alarm text-success"></i>
+							</div>
+						</div>
+						<div class="col-7">
+							<div class="numbers">
+								<p class="card-category">Today's Alerts</p>
+								
+						
+								<h4 class="card-title"><?=$todaysSale["alerts"]?></h4>
+							</div>
+						</div> 
+					</div>
+				</div>
+				<div class="card-footer ">
+					<hr>
+					<div class="stats">
+						<i class="fa "></i> <?php echo date('d/m/Y'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</div>
+	<div class="row"> 
+		<div class="col-md-4">
+			<div class="card ">
+				<div class="card-header ">
+					<h4 class="card-title">Daily</h4>
+					<p class="card-category">Transactions | Alerts | Reports</p>
+				</div>
+				<div class="card-body ">
+					<div id=chartEmail class="ct-chart ct-perfect-fourth"></div>
+				</div>
+				<div class="card-footer ">
+				<div class="legend">
+					<i class="fa fa-circle text-info chatclicks"></i> Transactions (<?= $nimpress ?>)
+					<i class="fa fa-circle text-danger chatleads"></i> Alerts (<?= $nsubmission ?>)
+					<i class="fa fa-circle text-warning chatsale"></i> Reports (<?= $nconfirlead ?>)
+				</div>
+				<hr>
+				<div class="stats">
+					<i class="fa fa-clock-o"></i> <?php echo date('d/m/Y'); ?>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="card ">
+				<div class="card-header ">
+					<h4 class="card-title">Monthly</h4>
+					<p class="card-category">Transactions | Alerts | Reports</p>
+				</div>
+				<div class="card-body ">
+					<div id=chartHours class="ct-chart"></div>
+				</div>
+				<div class="card-footer ">
+					<div class="legend">
+						<i class="fa fa-circle text-info chatclicks"></i> Transactions (<?= $cmimpress ?>)
+						<i class="fa fa-circle text-warning chatleads"></i> Alerts (<?= $cmsubmission ?>)
+						<i class="fa fa-circle text-danger chatsale"></i> Reports (<?= $cmconfirlead ?>)
+						
+					</div>
+					<hr>
+					<div class="stats">
+						<i class="fa fa-history"></i> <?php echo date('F'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card ">
+				<div class="card-header ">
+					<h4 class="card-title">Yearly</h4>
+					<p class="card-category">Transactions | Alerts</p>
+				</div>
+				<div class="card-body ">
+					<div id="chartActivity" class="ct-chart"></div>
+				</div>
+				<div class="card-footer ">
+					<div class="legend">
+						<i class="fa fa-circle text-info chatleads"></i> Transactions (<?= $yearSale["val_year_trans"] ?>)
+						<i class="fa fa-circle text-danger chatsale"></i> Alerts (<?= $yearSale["val_year_alerts"] ?>)
+					</div>
+					<hr>
+					<div class="stats">
+						<i class="fa fa-check"></i> Year: <?php echo date('Y'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card  card-tasks">
+				<div class="card-header ">
+					<?php 
+					$lastloginsql = select("user_log","user_id = '$leadgenid'order by date DESC limit 1"); 
+					$lastlogrow = mysqli_fetch_array($lastloginsql)
+					?>
+					<h4 class="card-title">Login History</h4>
+					<p class="card-category">Last Login ip: <?php echo $lastlogrow['ip']; ?></p>
+				</div>
+				<div class="card-body ">
+					<div class="table-full-width">
+					<?php $loginsql = select("user_log","user_id = '$leadgenid'order by date DESC limit 7"); ?>
+						<table class="table">
+							<tbody>
+							<?php while($logrow = mysqli_fetch_array($loginsql)){ 
+							
+							$logrow['date'];
+							
+							?>
+								<tr>
+									<td>
+										<div class="form-check">
+											<label class="form-check-label">
+												<input class="form-check-input" type="checkbox" value="">
+												<span class="form-check-sign"></span>
+											</label>
+										</div>
+									</td>
+									<td><?php echo $logrow['ip']; ?> - <?php echo date('d/m/Y',strtotime($logrow['date'])); ?> @ <?php echo date('h:i',strtotime($logrow['date'])); ?></td>
+									<td class="td-actions text-right">
+									</td>
+								</tr>
+							<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card-footer ">
+					<hr>
+					<div class="stats">
+						<i class="now-ui-icons loader_refresh spin"></i> Last Succesful Login: <?php echo date('d/m/Y',strtotime($lastlogrow['date'])); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+if(is_nan($pimpress) == 1){
+	$pimpress = 0; 
+}
+if(is_nan($psubmission) == 1){
+	$psubmission = 0; 
+}
+if(is_nan($pconfirlead) == 1){
+	$pconfirlead = 0; 
+}
+?>
+<script language="javascript" type="text/javascript">
+	var pclick = <?php echo round($pimpress); ?>;
+	var plead = <?php echo round($psubmission); ?>;
+	var psale = <?php echo round($pconfirlead); ?>;
+	var yearclick = '<?php echo json_encode($submissionyearly); ?>';
+	var yearsale = '<?php echo json_encode($leadsyearly); ?>';
+	var saledate = <?php echo '['.rtrim($mimpress['weekvalue'],',').']'; ?>;
+	var yearMsale = <?php echo '['.rtrim($mconfirlead['wsale'],',').']'; ?>;
+	var yearMclicks = <?php echo '['.rtrim($mimpress['wsale'],',').']'; ?>;
+	var yearMleads = <?php echo '['.rtrim($msubmission['wsale'],',').']'; ?>;
+	//alert(<?php echo $leadsyearly;?>);
+	//alert(pclick + ", " + plead + ", " + psale + ", " + yearclick + ", " + yearsale + ", "+ saledate + "," + yearMsale + ", " + yearMclicks + ", " + yearMleads);
+</script> 

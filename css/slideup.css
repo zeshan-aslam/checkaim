@@ -1,0 +1,90 @@
+#ulp-123456-overlay
+{
+background: rgba(51,51,51,0.8);
+}
+#ulp-htwd
+{
+ width: 720px;
+ height: 500px;
+}
+
+.ulp-layer{
+{animation-duration: 1000ms; 
+animation-delay: 0ms; 
+left: 365px;
+top: 0px;
+line-height: 1.475;
+letter-spacing: 0;
+background-position: center center;
+ }
+ 
+#ulp-overlay123
+{
+animation-duration: 1000ms; 
+animation-delay: 0ms; 
+left: 365px;
+top: 0px;
+position: fixed !important;
+z-index: 999999;
+height: 100%;
+width: 100%;}
+
+.ulp-window
+{
+position: fixed !important;
+z-index: 1000001;
+text-align: left;
+}
+.ulp-window-middle-center 
+{
+    left: 50% !important;
+    top: 50% !important;
+}
+	
+.ulp-content
+{    position: relative;
+}
+ .ulp-layerbackground
+ {box-shadow: 0px 5px 20px 0px #202020;
+background-color: #e6d8d8;
+background-color: rgba(230,216,216,1);
+background-image: url
+(https://avaz.co.uk/leadgen/img/backimg/1558107979slide3-1.png);)
+background-repeat: no-repeat;
+background-size: auto;
+border-radius: 0px;
+z-index: 1000003;
+text-align: left;
+padding: 0px 0px;}
+ .popright
+ {
+ box-shadow: 0px 5px 20px 0px #202020;
+    background-color: #f3f3f3;
+    background-color: rgba(243,243,243,1);
+    border-radius: 0px;
+    z-index: 1000004;
+    text-align: left;
+    padding: 20px 15px;
+	}
+	
+	 #ulp-layerheading
+ {font-family: 'Open Sans',arial;
+font-weight: 700;
+color: #ea5455;
+font-size: 71px;
+}
+
+
+ #ulp-layersubheading
+{
+ font-weight: 400;
+color: #223147;
+font-size: 14px;
+border-radius: 0px;
+z-index: 1000006;
+text-align: left;
+padding: 0px 0px;
+width: 265px;
+height: 45px;
+}
+

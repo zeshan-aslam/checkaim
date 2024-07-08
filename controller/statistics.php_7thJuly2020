@@ -1,0 +1,140 @@
+<?php
+include('../config.php');
+
+
+if(isset($_REQUEST['transactionstats']))
+{
+	global $con;
+
+	$status = false;
+	$mid = leaduserinfo('id');
+	$saleData = array();
+	
+	if($mid > 0)
+	{
+		$from = isset($_POST["from"]) ? $_POST["from"] : "";
+		$to = isset($_POST["to"]) ? $_POST["to"] : "";
+
+		
+		$saleSql = "select date, sales, alerts, transactions, reports from partners_aidailystats where mid='$mid'  "; 
+
+		if($from != "" && $to != "")
+		{
+			$saleSql.= " and date between '$from' and '$to' ";
+		}
+
+		$saleSqlResult 	=	mysqli_query($con, $saleSql);	
+
+		while($saleItem = mysqli_fetch_assoc($saleSqlResult))
+		{
+			$saleData[] = $saleItem;
+		}
+
+
+		$response["status"] = $status;
+		$response["data"] = $saleData;
+		$response["sql"] = $saleSql;
+
+		echo json_encode($response);
+
+		die();
+	}
+	else
+	{
+		die("Merchant not found");
+	}	
+}
+
+
+
+if(isset($_REQUEST['osstats']))
+{
+	global $con;
+
+	$status = false;
+	$mid = leaduserinfo('id');
+	$data = array();
+	
+	if($mid > 0)
+	{
+
+		$from = isset($_POST["from"]) ? $_POST["from"] : "";
+		$to = isset($_POST["to"]) ? $_POST["to"] : "";
+		
+		$osSql = "SELECT os, count(*) as oscount FROM `partners_aianalytics` where mid = '$mid' "; 
+
+		if($from != "" && $to != "")
+		{
+			$osSql.= " and createdate between '$from' and '$to' ";
+		}
+
+		$osSql.= " GROUP by os ";
+
+		$osSqlResult 	=	mysqli_query($con, $osSql);	
+
+		while($osItem = mysqli_fetch_assoc($osSqlResult))
+		{
+			$data[] = array ("key" => $osItem["os"], "value" => $osItem["oscount"]);
+		}
+
+
+		$response["status"] = $status;
+		$response["data"] = $data;
+		$response["sql"] = $osSql;
+
+		echo json_encode($response);
+
+		die();
+	}
+	else
+	{
+		die("Merchant not found");
+	}	
+}
+
+
+if(isset($_REQUEST['browserstats']))
+{
+	global $con;
+
+	$status = false;
+	$mid = leaduserinfo('id');
+	$data = array();
+	
+	if($mid > 0)
+	{
+		$from = isset($_POST["from"]) ? $_POST["from"] : "";
+		$to = isset($_POST["to"]) ? $_POST["to"] : "";
+
+		$osSql = "SELECT browser, count(*) as browsercount FROM `partners_aianalytics` where mid = '$mid' "; 
+
+		if($from != "" && $to != "")
+		{
+			$osSql.= " and createdate between '$from' and '$to' ";
+		}
+
+		$osSql.= " GROUP by browser ";
+
+		$osSqlResult 	=	mysqli_query($con, $osSql);	
+
+		while($osItem = mysqli_fetch_assoc($osSqlResult))
+		{
+			$data[] = array ("key" => $osItem["browser"], "value" => $osItem["browsercount"]);
+		}
+
+
+		$response["status"] = $status;
+		$response["data"] = $data;
+
+		echo json_encode($response);
+
+		die();
+	}
+	else
+	{
+		die("Merchant not found");
+	}	
+}
+
+
+?>

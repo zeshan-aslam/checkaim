@@ -1,0 +1,59 @@
+ <?php
+
+#------------------------------------------------------------------------------
+# getting mercahnt status
+#------------------------------------------------------------------------------
+
+    $mid =  leaduserinfo('id'); ;
+
+	 
+ ?>  
+
+<div class="row">  
+	<div class="col-md-12">
+		<div class="card stacked-form trackcode_form">
+			<div class="card-body">
+		In order for us to perform the relevant tracking, this code must be placed be placed on either the confirmation page / completed sale page, or in the case of a publisher/affiliate in the click journey of the active user.<br>
+		All transactions will then be recorded and available within the reports.<br>
+		PLEASE DO NOT POST PERSONAL INFORMATION OF ANY CUSTOMER<br>
+<br>
+<b>The Essential Variables</b><br>
+orderid = This is the order ID of the transaction that you can use to identify it.<br>
+auid = This is the customer account identification (Account Number) relevant to you eg: ABC123<br><br>
+<b>The Optional Variables</b><br>
+sale = This is the total value of the order less tax eg 12.25<br>
+productids = List all product ids of items within the transaction using a seperator eg 112233-223344<br>
+postage = Put all details of any postage costs eg 3.99<br>
+taxcosts = Place any tax costs such as VAT eg = 12.20<br>
+cartid = If you have multiple cart/countries you can place them here eg = UK or 14556.<br>
+trafficsource = You can use this to populate eg: Google/Yahoo<br>
+keyword = You can populate this eg: "cheap glasses"<br>
+<br>
+<b>Please copy and paste the below code:</b><br>
+
+
+
+		</div>
+			<div class="card-body">
+				<!--<a href="../docs/IntegrationMethods.php" target="_blank" ><?//=$lang_shoppingCartIntegration?></a>-->
+				<h4 class="card-title"><?=$lgetcode_TrackingCodeforLead?></h4>			
+				<div class="form-group">
+					<textarea rows="10" name="headertxt" class="form-control">
+	                <?php
+	                /*$code =  "\n<!--START CheckAIM CODE-->\n<img src=\"https://checkaim.com/secure.php?mid=$mid&amp;orderId={OrderID}&amp;sale={OrderVALUE}&amp;productids={productids}&amp;postage={postage}&amp;taxcosts={taxcost}&amp;cartid={cartid}&amp;auid={auid}&amp;trafficsource={trafficsource}&amp;keyword={keyword}\" height=\"1\" width=\"1\" alt=\"\"> \n<!-- END CheckAIM CODE -->";
+					
+	                $code =  "<!--START CheckAIM CODE--><img src=\"https://checkaim.com/secure.php?mid=$mid&amp;orderId={OrderID}&amp;sale={OrderVALUE}&amp;productids={productids}&amp;postage={postage}&amp;taxcosts={taxcost}&amp;cartid={cartid}&amp;auid={auid}&amp;trafficsource={trafficsource}&amp;keyword={keyword}\" height=\"1\" width=\"1\" alt=\"\"> \n<!-- END CheckAIM CODE -->";	                
+					
+					//echo $code;*/
+	                ?> 
+<!--START CheckAIM CODE-->
+<img src="https://checkaim.com/secure.php?mid=<?php echo $mid; ?>&orderId={OrderID}&sale={OrderVALUE}&productids={productids}&postage={postage}&taxcosts={taxcost}&cartid={cartid}&auid={auid}&trafficsource={trafficsource}&keyword={keyword}" height="1" width="1" alt="">
+<!-- END CheckAIM CODE -->
+	                </textarea>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+ 	
